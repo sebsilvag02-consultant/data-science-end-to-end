@@ -46,18 +46,24 @@ Enunciado: [`starter/viajes_taxi.csv`](./starter/viajes_taxi.csv) tiene 3000 via
 
 **Respuesta 1, antes de ver la solución:** en `describe()`, ¿qué dos valores de la tabla te harían sospechar de un error sin necesidad de graficar nada?
 
-_(tu respuesta)_
+_(9999 y null)_
 
 **Respuesta 2:** la regla del IQR marca más de 300 viajes con tarifa atípica. ¿Esperas que todos sean errores? ¿Cómo lo averiguarías?
 
-_(tu respuesta)_
+_(no necesariamente todos son errores hay que ver si entre los demas datos tambien vemos excepciones)_
 
 **La formulación completa, tal como la resuelvo yo:**
 
-_(anota aquí el script y lo que encontró, mientras se revisa en clase)_
+q1=data["tarifa"].quantile(0.25)
+q3=data["tarifa"].quantile(0.75)
+
+iqr=q3-q1
+
+limite_superior=q3+1.5*iqr
+limite_inferior=q1-1.5*iqr
 
 ## Durante el ConcepTest
-
+**NO SE REALIZO**
 **Tu voto, antes de discutir en pareja** (A, B, C o D):
 
 _(tu voto)_
@@ -76,15 +82,15 @@ Solo o en pareja. Parte de la plantilla [`plantilla-ejercicio2/explorar_relacion
 
 **Hallazgo 1: qué muestra el gráfico de distancia contra tarifa, además de la tendencia general.**
 
-_(tu hallazgo, con el número que lo confirma)_
+Además de la tendencia creciente entre distancia y tarifa, el gráfico muestra una banda horizontal en una tarifa de 70, incluso para distancias diferentes. Hay **300 viajes con tarifa exactamente igual a 70**, lo que indica una tarifa fija que no depende directamente de la distancia recorrida.
 
 **Hallazgo 2: qué pasa con la propina según el método de pago, y si crees que describe a los pasajeros o al sistema que registra los datos.**
 
-_(tu hallazgo, con el número que lo confirma)_
+En los **888 viajes pagados en efectivo**, la propina registrada es 0 en todos los casos y, por tanto, su promedio también es 0. En cambio, los viajes pagados con tarjeta tienen una propina promedio de **4,73** y ninguno registra una propina de 0. Esto probablemente describe una limitación del sistema de registro: las propinas en efectivo no se registran, por lo que no se puede concluir que esos pasajeros nunca dejan propina.
 
 **Hallazgo 3: la duración tiene una correlación con la tarifa tan alta como la distancia. Si el modelo tiene que estimar la tarifa en el momento en que alguien pide el taxi, ¿puede usar la duración?**
 
-_(tu respuesta)_
+No puede usar la duración real del viaje, porque todavía no se conoce cuando el pasajero solicita el taxi. Aunque su correlación con la tarifa es **0,956**, muy cercana a la correlación de la distancia (**0,960**), incluirla produciría fuga de información. El modelo tendría que usar variables disponibles al solicitar el viaje o, como alternativa, una duración estimada a partir de la ruta, la hora y el tráfico.
 
 ## Ejercicio 3: explora el dataset de tu proyecto
 

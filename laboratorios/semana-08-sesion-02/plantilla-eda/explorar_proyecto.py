@@ -1,17 +1,22 @@
-import os
+from pathlib import Path
 
 import matplotlib.pyplot as plt
 import pandas as pd
 
-os.makedirs("figuras", exist_ok=True)
+DIRECTORIO_SCRIPT = Path(__file__).resolve().parent
+DIRECTORIO_FIGURAS = DIRECTORIO_SCRIPT / "figuras"
+RUTA_DATOS = DIRECTORIO_SCRIPT.parent / "starter" / "viajes_taxi.csv"
+
+DIRECTORIO_FIGURAS.mkdir(exist_ok=True)
+viajes = pd.read_csv(RUTA_DATOS)
 
 # TODO: reemplaza por la ruta del archivo que tu pipeline de la Semana 7
 # deja listo para modelar (una tabla del warehouse exportada a CSV, o el
 # CSV limpio de tu etapa de calidad).
-datos = pd.read_csv("TODO_ruta_del_archivo.csv")
+datos = pd.read_csv(r"./semanal-08-sesion-02/plantilla-eda/player_valuations.csv")
 
 # TODO: reemplaza por el nombre de la columna que tu modelo va a predecir.
-OBJETIVO = "TODO_columna_objetivo"
+OBJETIVO = "market_value_in_eur"
 
 # Paso 1: resumen.
 print("Filas y columnas:", datos.shape)
