@@ -39,9 +39,21 @@ fuera = datos[(datos[OBJETIVO] < q1 - 1.5 * iqr) | (datos[OBJETIVO] > q3 + 1.5 *
 print(f"Atipicos de {OBJETIVO} segun IQR: {len(fuera)}")
 print(fuera.head(10))
 
-# TODO, paso 4: elige la variable de entrada que esperas que mas influya
-# en el objetivo y grafica su relacion con el (dispersion si es numerica,
-# promedio del objetivo por grupo si es categorica).
+VARIABLE_ENTRADA = "current_club_name"
+promedio_por_club = (
+    datos.groupby(VARIABLE_ENTRADA, observed=True)[OBJETIVO]
+    .mean()
+    .nlargest(15)
+    .sort_values()
+)
+plt.figure(figsize=(10, 6))
+promedio_por_club.plot.barh()
+plt.xlabel(f"Promedio de {OBJETIVO}")
+plt.ylabel(VARIABLE_ENTRADA)
+plt.title(f"{OBJETIVO} promedio por {VARIABLE_ENTRADA}")
+plt.tight_layout()
+plt.savefig(DIRECTORIO_FIGURAS / "objetivo_por_club.png")
+plt.close()
 
 # TODO, paso 5: agrega aqui las consultas que necesites para confirmar
 # cada uno de tus 3 hallazgos (un filtro, un groupby, una correlacion).
