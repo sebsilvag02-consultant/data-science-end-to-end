@@ -1,0 +1,9 @@
+services:
+  python-app:
+    build: .
+    container_name: semana08
+    working_dir: /app/starter
+    command: ["python", "EDA.py"]
+    volumes:
+      - ./data-contenedor:/app/starter/figuras
+    

@@ -1,0 +1,7 @@
+services:
+  explorar-relaciones:
+    build:
+      context: ..
+      dockerfile: plantilla-ejercicio2/Dockerfile
+    volumes:
+      - ./figuras:/app/plantilla-ejercicio2/figuras
