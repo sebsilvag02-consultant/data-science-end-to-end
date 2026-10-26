@@ -1,0 +1,9 @@
+services:
+  python-app:
+    build: .
+    container_name: semana09
+    working_dir: /app/plantilla-ejercicio2
+    command: ["python", "features_de_zon.py"]
+    volumes:
+      - ./data-contenedor:/app/plantilla-ejercicio2/figuras
+    
